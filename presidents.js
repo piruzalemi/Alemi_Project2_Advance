@@ -240,7 +240,7 @@ var icons = {
 //                                                    Alemi Matrch 5 2020
 // ----------------------------------------------------------------------------------------------
 
-console.log("........before reading candidates data.............")
+//console.log("........before reading candidates data.............")
 
 // http://127.0.0.1:5000/api/v1/presidents
 // console.log(http://127.0.0.1:5000/api/v1/presidents)
@@ -249,28 +249,25 @@ urlFlask = "http://127.0.0.1:5000/api/v1/presidents"
 //d3.json("data_candidates_file.json", function(dataRows) {
   d3.json(urlFlask, function(dataRows) {
   //var stationStatus2 = statusRes2[0].state;
-  console.log("dataRows Length #####", dataRows.length)
-
-  
-
+  console.log("dataRows Lenth #####", dataRows.length)
   for (i = 0; i < dataRows.length; i++) {
-    
     president =dataRows[i]
     state = president.state
     candLat = president.Latitude
     candLong = president.Longitude
-    if (candLat == null || candLong == null || i > 5000)
+
+    if (candLat == null || candLong == null || i > 1000)
     {
       continue;
     };
+
+
 
 
     candName = president.candidate_name
     candAnswer = president.answer
     candPct = president.pct
     pollId = president.poll_id
-
-    
 
     
     
@@ -331,6 +328,8 @@ urlFlask = "http://127.0.0.1:5000/api/v1/presidents"
 });
 
 
+
+//console.log("..................read Candidates Data.............")
 
 
 // Perform an API call to the Citi Bike Station Information endpoint
@@ -428,6 +427,7 @@ d3.json("https://gbfs.citibikenyc.com/gbfs/en/station_information.json", functio
 function updateLegend(time, stationCount, earthCount) {
   document.querySelector(".legend").innerHTML = [
     "<p>Updated: " + moment.unix(time).format("h:mm:ss A") + "</p>",
+    "<p class='low'>---------------------- " + " " + "</p>",
     "<p class='out-of-order'>Out: " + stationCount.OUT_OF_ORDER + "</p>",
     "<p class='coming-soon'>Soon: " + stationCount.COMING_SOON + "</p>",
     "<p class='empty'>Empty: " + stationCount.EMPTY + "</p>",
@@ -437,10 +437,13 @@ function updateLegend(time, stationCount, earthCount) {
     "<p class='low'>---------------------- " + " " + "</p>",
     "<p class='coming-soon'>Major Earth quakes: " + earthCount.COMING_SOON + "</p>",
     "<p class='low'>Low mag earthquake: " + earthCount.LOW + "</p>",
-    "<p class='healthy'>Midium size earthQuake: " + earthCount.NORMAL + "</p>",
-    "<p class='healthy'>Empty earthQuake: " + earthCount.EMPTY + "</p>"
+    "<p class='healthy'>Midium size earthQuake: " + earthCount.NORMAL + "</p>"
+    //"<p class='healthy'>Empty earthQuake: " + earthCount.EMPTY + "</p>"
   ].join("");
 }
+
+
+    
 
 
 // --------------------------------------------------------------------------------------------------
@@ -665,12 +668,12 @@ function createMap(earthquakes) {
   //                3. Add the layer control to the map
   // Note: We have multiple overlay maps, without a switch box
   // -------------------------------------------------------------------
-  // console.log("Wow baseMaps + overlayMaps?")
-  // console.log(earthquakes)
+  //console.log("Wow baseMaps + overlayMaps?")
+  //console.log(earthquakes)
   //   This also adds the controls options for various layers
   // L.control.layers(null, overlays).addTo(map);
   // L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(myMap);
-  L.control.layers(overlayMaps, {collapsed: false}).addTo(map);
+  L.control.layers(null, overlayMaps, {collapsed: false}).addTo(map);
   //L.control.layers(null, overlays, {collapsed: false}).addTo(map);
 
 }

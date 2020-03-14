@@ -240,7 +240,7 @@ var icons = {
 //                                                    Alemi Matrch 5 2020
 // ----------------------------------------------------------------------------------------------
 
-console.log("........before reading candidates data.............")
+//console.log("........before reading candidates data.............")
 
 // http://127.0.0.1:5000/api/v1/presidents
 // console.log(http://127.0.0.1:5000/api/v1/presidents)
@@ -255,6 +255,15 @@ urlFlask = "http://127.0.0.1:5000/api/v1/presidents"
     state = president.state
     candLat = president.Latitude
     candLong = president.Longitude
+
+    if (candLat == null || candLong == null || i > 1000)
+    {
+      continue;
+    };
+
+
+
+
     candName = president.candidate_name
     candAnswer = president.answer
     candPct = president.pct
@@ -267,7 +276,7 @@ urlFlask = "http://127.0.0.1:5000/api/v1/presidents"
 
     var candidates_data = dataRows[i];
     //console.log("Candidates Data:", candidates_data)
-    console.log("President:", president)
+    //console.log("President:", president)
 
       // ------------------------------------------------------------------------------
       // Update the president count
@@ -279,21 +288,21 @@ urlFlask = "http://127.0.0.1:5000/api/v1/presidents"
       // -----------------------------------------------------------------------------
       var presidentStatusCode;
 
-            console.log(candAnswer)
+            //console.log(candAnswer)
             // If a station has less than 5 bikes, it's status is low
             if (candAnswer == "Biden") {
-              console.log("Biden Found!!!!!!!!!")
+              //console.log("Biden Found!!!!!!!!!")
               presidentStatusCode = "BIDEN";
 
             }
       
             else if (candAnswer == "Sanders") {
-              console.log("Sanders Found!!!!!!!!!")
+              //console.log("Sanders Found!!!!!!!!!")
               presidentStatusCode = "SANDERS";
             }
             else 
             {
-              console.log("Other Found!!!!!!!!!")
+              //console.log("Other Found!!!!!!!!!")
               presidentStatusCode = "OTHER"
             };
 
@@ -320,7 +329,7 @@ urlFlask = "http://127.0.0.1:5000/api/v1/presidents"
 
 
 
-console.log("..................read Candidates Data.............")
+//console.log("..................read Candidates Data.............")
 
 
 // Perform an API call to the Citi Bike Station Information endpoint
@@ -418,6 +427,7 @@ d3.json("https://gbfs.citibikenyc.com/gbfs/en/station_information.json", functio
 function updateLegend(time, stationCount, earthCount) {
   document.querySelector(".legend").innerHTML = [
     "<p>Updated: " + moment.unix(time).format("h:mm:ss A") + "</p>",
+    "<p class='low'>---------------------- " + " " + "</p>",
     "<p class='out-of-order'>Out: " + stationCount.OUT_OF_ORDER + "</p>",
     "<p class='coming-soon'>Soon: " + stationCount.COMING_SOON + "</p>",
     "<p class='empty'>Empty: " + stationCount.EMPTY + "</p>",
@@ -427,8 +437,8 @@ function updateLegend(time, stationCount, earthCount) {
     "<p class='low'>---------------------- " + " " + "</p>",
     "<p class='coming-soon'>Major Earth quakes: " + earthCount.COMING_SOON + "</p>",
     "<p class='low'>Low mag earthquake: " + earthCount.LOW + "</p>",
-    "<p class='healthy'>Midium size earthQuake: " + earthCount.NORMAL + "</p>",
-    "<p class='healthy'>Empty earthQuake: " + earthCount.EMPTY + "</p>"
+    "<p class='healthy'>Midium size earthQuake: " + earthCount.NORMAL + "</p>"
+    //"<p class='healthy'>Empty earthQuake: " + earthCount.EMPTY + "</p>"
   ].join("");
 }
 
@@ -449,7 +459,7 @@ d3.json(queryUrl, function(data) {
   createEarthqFeatures(data.features);
 });
 
-console.log("Reading url2")
+//console.log("Reading url2")
 
 // ---------------------------------------------
 //     R E A D POLY DATA  a layer to be added 
@@ -476,8 +486,8 @@ function createEarthqFeatures(eqData) {
 
   var magnitude = eqData[0].properties.mag
 
-  console.log("magnitude:",magnitude)
-  console.log(eqData[0])
+  //console.log("magnitude:",magnitude)
+  //console.log(eqData[0])
 
    // Create an object to keep of the number of markers in each layer
    // Note This counter was moved out of the local function to make it global and accessible
@@ -504,12 +514,12 @@ function createEarthqFeatures(eqData) {
     // Test the magintude of the earth quake
     // ------------------------------------------------------------------------
 
-      console.log(" * * * * * * * * * * * * * * * * * * *")
+      //console.log(" * * * * * * * * * * * * * * * * * * *")
       var eachEq = eqData[i];
       // console.log(eachEq.properties)
       // If eachEq is coming soon
       if (!eachEq.properties.mag < 10) {
-        console.log(eachEq.properties.mag)
+        //console.log(eachEq.properties.mag)
         earthStatusCode = "COMING_SOON";
       }
       // If eachEq has no magnitude available, it's empty
@@ -570,7 +580,7 @@ function createEarthqFeatures(eqData) {
   // -------------------------------------------------------------------------------------------------
   // newMarker.addTo(layers[stationStatusCode]);
   createMap(earthquakes);
-  console.log("earthquakes:........:",earthquakes)
+  //console.log("earthquakes:........:",earthquakes)
 }
 
 
@@ -578,8 +588,8 @@ function createEarthqFeatures(eqData) {
 //                                 P O L Y         S E C T I O N
 //----------------------------------------------------------------------------------------------------
     function createPolyFeatures(polyData) {
-      console.log("..............Wow  entered Poly Section...................................................")
-      console.log("create polyData features2....?")
+      //console.log("..............Wow  entered Poly Section...................................................")
+      //console.log("create polyData features2....?")
 
       // ------------------------------------------------------------------------------------------------  
       // A function within a function!  
@@ -611,7 +621,7 @@ function createEarthqFeatures(eqData) {
   
     function createMap2(poly) {
 
-      console.log("entered createMap2(poly)")
+      //console.log("entered createMap2(poly)")
       
       var overlayMaps = {
         "Poly Data": poly,
@@ -642,7 +652,7 @@ function createEarthqFeatures(eqData) {
 
 function createMap(earthquakes) {
 
-   console.log("entered function createMap(earthquake)")
+  // console.log("entered function createMap(earthquake)")
   // --------------------------------------------------
   // Create overlay object to hold our overlay layer
   // -------------------------------------------------
@@ -658,8 +668,8 @@ function createMap(earthquakes) {
   //                3. Add the layer control to the map
   // Note: We have multiple overlay maps, without a switch box
   // -------------------------------------------------------------------
-  console.log("Wow baseMaps + overlayMaps?")
-  console.log(earthquakes)
+  //console.log("Wow baseMaps + overlayMaps?")
+  //console.log(earthquakes)
   //   This also adds the controls options for various layers
   // L.control.layers(null, overlays).addTo(map);
   // L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(myMap);
